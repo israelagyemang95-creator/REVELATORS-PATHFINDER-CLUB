@@ -1,1 +1,435 @@
-# REVELATORS-PATHFINDER-CLUB
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Revelators Pathfinder Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Nunito:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3F6FB;--sf:#fff;--ink:#14233F;--mut:#5A6B86;--navy:#14233F;--gold:#F2B632;--sky:#1F7DB8;--red:#C9372E;--ok:#238A5C;--ln:#D5DDEA;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1424;--sf:#14233F;--ink:#EAF0FA;--mut:#9FB0CB;--ln:#2A3D62;--sky:#5CB8EC;--ok:#4CC58C;--red:#F0766E}}
+:root[data-theme="dark"]{--bg:#0B1424;--sf:#14233F;--ink:#EAF0FA;--mut:#9FB0CB;--ln:#2A3D62;--sky:#5CB8EC;--ok:#4CC58C;--red:#F0766E}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.55 Nunito,system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--navy);z-index:10}
+h1,h2,h3{font-family:'Bricolage Grotesque',Georgia,sans-serif;line-height:1.1;margin:0}
+h2{font-size:1.7rem;margin-bottom:.4rem}h3{font-size:1.15rem}
+p{margin:.3rem 0 1rem;max-width:62ch}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--navy);color:#fff}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.6rem 1rem .2rem}
+.brand{font:800 1.1rem 'Bricolage Grotesque',sans-serif}
+.chip{background:var(--gold);color:#14233F;font-weight:700;border-radius:99px;padding:.15rem .8rem;font-size:.9rem;white-space:nowrap}
+nav{display:flex;gap:.3rem;overflow-x:auto;padding:.2rem 1rem .6rem}
+nav a{color:#fff;text-decoration:none;padding:.4rem .9rem;border-radius:99px;font-weight:700;white-space:nowrap}
+nav a.on{background:#fff;color:#14233F}
+main{max-width:920px;margin:0 auto;padding:1rem}
+.view{display:none}.view.on{display:block}
+.hero{background:var(--navy);color:#fff;border-radius:22px;padding:1.5rem 1.2rem;margin-bottom:1.2rem;border-bottom:6px solid var(--gold)}
+.hero h1{font-size:clamp(2.2rem,9vw,3.6rem);font-weight:800}
+.hero p{color:#C9D6EC}
+.trail{display:flex;align-items:flex-start;margin:1.2rem 0 .4rem}
+.stop{flex:1;text-align:center;font-size:.72rem;color:#9FB0CB;position:relative}
+.stop i{display:block;width:22px;height:22px;border-radius:50%;background:#2A3D62;margin:0 auto .3rem;position:relative;z-index:1;border:3px solid #14233F}
+.stop::before{content:"";position:absolute;top:10px;left:-50%;width:100%;height:4px;background:#2A3D62}
+.stop:first-child::before{display:none}
+.stop.done i{background:var(--gold)}.stop.done::before{background:var(--gold)}
+.stop.now i{background:#fff;box-shadow:0 0 0 4px var(--gold)}
+.stop.done,.stop.now{color:#fff;font-weight:700}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+input,textarea,select{font:inherit;color:var(--ink);background:var(--sf);border:2px solid var(--ln);border-radius:12px;padding:.55rem .8rem;max-width:100%}
+.hero input{background:#fff;color:#14233F;border-color:transparent}
+button{font:700 1rem Nunito,sans-serif;cursor:pointer;border:0;border-radius:12px;padding:.6rem 1.1rem;background:var(--gold);color:#14233F}
+button.alt{background:var(--sf);color:var(--ink);border:2px solid var(--ln)}
+.grid{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--sf);border:2px solid var(--ln);border-radius:18px;padding:1rem}
+.verse{border-left:6px solid var(--gold);background:var(--sf);padding:1rem 1.2rem;border-radius:0 18px 18px 0;margin-bottom:1.2rem}
+.verse q{font:700 1.25rem/1.35 'Bricolage Grotesque',Georgia,serif;display:block;quotes:"“" "”"}
+.verse small{color:var(--mut)}
+.tag{display:inline-block;font-size:.8rem;font-weight:700;background:var(--navy);color:#fff;border-radius:8px;padding:.05rem .5rem}
+.opts{display:grid;gap:.5rem;margin:.8rem 0}
+.opts button{background:var(--sf);color:var(--ink);border:2px solid var(--ln);text-align:left}
+.opts button.good{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opts button.bad{background:var(--red);color:#fff;border-color:var(--red)}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;max-width:380px;margin:.8rem 0}
+.mem button{aspect-ratio:1;font-size:1.8rem;padding:0;background:var(--navy);color:var(--navy)}
+.mem button.up{background:#fff;color:#000;border:3px solid var(--gold)}
+.mem button.ok{background:var(--gold);color:#000}
+.flip{min-height:130px;display:flex;flex-direction:column;justify-content:center;text-align:center;font:700 1.2rem 'Bricolage Grotesque',sans-serif;cursor:pointer;width:100%;background:var(--sf);color:var(--ink);border:2px solid var(--ln);border-radius:18px;padding:1rem}
+.flip span{display:block;font:500 .95rem Nunito,sans-serif;color:var(--mut);margin-top:.3rem}
+.goal{display:flex;gap:.7rem;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--ln)}
+.goal input{width:22px;height:22px;accent-color:var(--ok)}
+.post{border-bottom:1px solid var(--ln);padding:.7rem 0;overflow-wrap:anywhere}
+.post b{display:block}
+.mut{color:var(--mut)}
+#toast{position:fixed;left:50%;bottom:calc(1rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--navy);color:#fff;border:2px solid var(--gold);padding:.5rem 1rem;border-radius:99px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
+#toast.on{opacity:1}
+button{transition:transform .12s}button:hover{transform:translateY(-2px)}button:active{transform:scale(.95)}
+.av{background:#2A3D62;color:#fff;font-size:1.5rem;padding:.25rem .6rem}.av.on{background:var(--gold)}
+.sk{width:100%;text-align:left;background:var(--sf);color:var(--ink);border:2px solid var(--ln);font-size:1.05rem;border-radius:18px;padding:.8rem 1rem}.sk b{display:block;letter-spacing:.15em;color:#D99A0B;font-size:1.4rem}
+.ev{display:flex;justify-content:space-between;gap:.6rem;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--ln)}
+#gal img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px}
+#wcb:disabled{opacity:.7;cursor:default}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+#gate{position:fixed;inset:0;z-index:40;background:var(--bg);overflow-y:auto;display:flex;align-items:center;justify-content:center;padding:calc(1rem + env(safe-area-inset-top,0px)) 1rem calc(1rem + env(safe-area-inset-bottom,0px))}
+#gate[hidden]{display:none}
+.gbox{width:100%;max-width:420px;background:var(--sf);border:2px solid var(--ln);border-radius:22px;padding:1.4rem;border-bottom:6px solid var(--gold)}
+.gbox h1{font-size:1.9rem;margin-bottom:.3rem}
+.tabs{display:flex;gap:.4rem;margin:1rem 0}
+.tabs button{flex:1;background:var(--sf);color:var(--ink);border:2px solid var(--ln);padding:.5rem .3rem}
+.tabs button.on{background:var(--gold);color:#14233F;border-color:var(--gold)}
+#gf{display:grid;gap:.6rem}#gf input{width:100%}#gf input[hidden]{display:none}
+#gmsg{color:var(--red);font-weight:700;min-height:1.4em;margin:0}
+.bar .r{display:flex;align-items:center;gap:.5rem}
+.so{background:transparent;color:#fff;border:2px solid #2A3D62;padding:.1rem .7rem;font-size:.85rem}
+.ev.me{background:rgba(242,182,50,.2);border-radius:12px;padding-inline:.6rem}
+.warn{border-color:var(--gold);margin-bottom:1rem}
+nav a[hidden]{display:none}
+</style>
+</head>
+<body>
+<div id="gate"><div class="gbox">
+  <h1>Revelators Pathfinders</h1>
+  <p class="mut" style="margin-bottom:0">Sign in to climb the trail.</p>
+  <div class="tabs" id="gtabs"><button type="button" data-m="in" class="on">Sign in</button><button type="button" data-m="up">Join</button><button type="button" data-m="ld">Leader</button></div>
+  <form id="gf" autocomplete="on">
+    <input id="gu" placeholder="Your name or nickname" maxlength="16" autocomplete="username" aria-label="Your name or nickname">
+    <input id="gp" type="password" placeholder="Password" maxlength="30" autocomplete="current-password" aria-label="Password">
+    <input id="gp2" type="password" placeholder="Repeat password" maxlength="30" autocomplete="new-password" aria-label="Repeat password" hidden>
+    <p class="mut" id="ghint" style="margin:0;font-size:.9rem"></p>
+    <p id="gmsg" role="alert"></p>
+    <button type="submit" id="gsub">Sign in</button>
+  </form>
+</div></div>
+<header>
+  <div class="bar"><div class="brand">Revelators Pathfinders</div><div class="r"><div class="chip" id="pts">0 points</div><button class="so" id="so">Sign out</button></div></div>
+  <nav id="nav">
+    <a href="#home">🏠 Home</a><a href="#games">🎮 Games</a><a href="#learn">📖 Learn</a><a href="#club">⛺ Club</a><a href="#community">💬 Community</a><a href="#leaders">🏆 Leaders</a><a href="#admin" id="adminTab" hidden>🔑 Admin</a>
+  </nav>
+</header>
+<main>
+
+<section class="view" id="v-home">
+  <div class="hero">
+    <h1>Walk the trail with us.</h1>
+    <p id="hi">Games, learning and friends for every Revelator, ages 5 to 30. Earn points, climb the six Pathfinder classes.</p>
+        <div style="margin-top:.9rem;color:#C9D6EC;font-size:.9rem">Pick your trail buddy</div><div class="row" id="avs"></div><div class="trail" id="trail"></div>
+    <div id="next" style="color:#C9D6EC;font-size:.9rem"></div>
+  </div>
+  <div class="verse"><small>Verse of the day</small><q id="vtext"></q><small id="vref"></small></div>
+  <h2>Pick your next step</h2>
+  <div class="grid">
+    <div class="card"><h3>Play</h3><p>Bible quiz for three age groups and a camp-gear memory match.</p><a href="#games"><button>Open games</button></a></div>
+    <div class="card"><h3>Learn</h3><p>Flip through the Pathfinder Law and tick off your personal trail goals.</p><a href="#learn"><button>Start learning</button></a></div>
+    <div class="card"><h3>Connect</h3><p>Post a shout-out or a prayer request for the club.</p><a href="#community"><button>Visit the wall</button></a></div>
+  </div>
+</section>
+
+<section class="view" id="v-games">
+  <h2>Games</h2>
+  <p class="mut">Every right answer is 10 points. Finishing the memory match is 30.</p>
+  <div class="card" id="quiz">
+    <h3>Bible quiz</h3>
+    <p>Choose your group:</p>
+    <div class="row">
+      <button data-l="kids">Ages 5–9</button><button data-l="path">Ages 10–15</button><button data-l="young">Ages 16–30</button>
+    </div>
+  </div>
+  <div class="card" style="margin-top:1rem">
+    <h3>Camp gear memory match</h3>
+    <p>Flip two cards at a time and find all 8 pairs.</p>
+    <div class="row"><button id="mnew">New game</button><span id="mmoves" class="mut"></span></div>
+    <div class="mem" id="mem"></div></div><div class="card" style="margin-top:1rem"><h3>Verse fill-in</h3><p>Find the missing word. 10 points each.</p><div id="vg"></div>
+  </div>
+</section>
+
+<section class="view" id="v-learn">
+  <h2>Learn</h2>
+  <p class="mut">Tap a card to see what it means. Tap again to flip back.</p>
+  <div class="card" style="margin-bottom:1rem"><h3>The Pathfinder Pledge</h3>
+    <p>By the grace of God, I will be pure, kind, and true. I will keep the Pathfinder Law. I will be a servant of God and a friend to all.</p></div>
+  <div class="grid" id="law"></div>
+  <h2 style="margin-top:1.6rem">Knots to try</h2><p class="mut">Tap a knot for the steps.</p><div class="grid" id="knots"></div><h2 style="margin-top:1.6rem">My trail goals</h2>
+  <p class="mut">Each goal you complete earns 15 points.</p>
+  <div class="card" id="goals"></div>
+</section>
+
+<section class="view" id="v-club">
+  <h2>Club</h2>
+  <div class="card" style="margin-bottom:1.2rem;border-color:var(--gold)"><span class="tag">This week’s challenge</span><h3 id="wc" style="margin:.6rem 0"></h3><button id="wcb">I did it! +20</button></div>
+  <h2>Events</h2>
+  <div class="card" id="evs"></div>
+  <h2 style="margin-top:1.4rem">My skills</h2>
+  <p class="mut">Tap a skill to level up, from 0 to 3 stars. Each level is 10 points.</p>
+  <div class="grid" id="skills"></div>
+  <h2 style="margin-top:1.4rem">Photo gallery</h2>
+  <div class="grid" id="gal"></div>
+  </section>
+
+<section class="view" id="v-community">
+  <h2>Community wall</h2>
+  <p class="mut">Share a shout-out, a prayer request or a testimony. A leader checks each post before it appears. Posts are shared with the whole club. Keep it kind.</p>
+  <div class="card">
+    <div class="row">
+      <input id="wname" placeholder="Sign in to post" maxlength="24" aria-label="Your name" readonly>
+      <select id="wtype" aria-label="Post type"><option>Shout-out</option><option>Prayer request</option><option>Testimony</option></select>
+    </div>
+    <p></p>
+    <textarea id="wmsg" rows="3" maxlength="240" placeholder="Write something encouraging" style="width:100%" aria-label="Message"></textarea>
+    <p></p>
+    <button id="wpost">Post to wall</button><p class="mut" id="wpend"></p>
+    <div id="wall"></div>
+  </div>
+</section>
+
+<section class="view" id="v-leaders">
+  <h2>Leaderboard</h2>
+  <p class="mut">See which Revelator is leading the trail. Names come from the accounts made on the sign-in page.</p>
+  <div class="card" id="lb"></div>
+</section>
+
+<section class="view" id="v-admin">
+  <h2>Leader portal</h2>
+  <div class="card warn" id="adef"><b>Change the default password.</b> The leader password is still 0000. Set a new one at the bottom of this page.</div>
+  <h3 style="margin:1rem 0 .5rem">Wall posts waiting</h3><div class="card" id="apend"></div>
+  <h3 style="margin:1.2rem 0 .5rem">Children</h3><div class="card" id="akids"></div>
+  <div class="card" style="margin-top:.8rem"><h3>Reset a child’s password</h3><p></p><div class="row"><select id="rsel" aria-label="Child"></select><input id="rpw" placeholder="New password" maxlength="30" aria-label="New password"><button id="rbtn">Reset</button></div></div>
+  <h3 style="margin:1.2rem 0 .5rem">Events</h3>
+  <div class="card"><div class="row"><input id="et" placeholder="Event name" maxlength="50" aria-label="Event name"><input id="ed" type="date" aria-label="Event date"><button id="eadd">Add event</button></div><p class="mut" style="margin-top:.6rem">Remove events from the Club page while signed in as a leader.</p></div>
+  <h3 style="margin:1.2rem 0 .5rem">Leader password</h3>
+  <div class="card"><div class="row"><input id="apw1" type="password" placeholder="New leader password" maxlength="30" aria-label="New leader password" autocomplete="new-password"><input id="apw2" type="password" placeholder="Repeat it" maxlength="30" aria-label="Repeat password" autocomplete="new-password"><button id="apwb">Save</button></div></div>
+  <div class="card" style="margin-top:1.2rem"><button class="alt" id="wclear">Clear approved wall</button><p class="mut" style="margin-top:.8rem">Accounts, points, events and approvals are shared across every phone through the hub backend (Firebase). If it cannot connect, they are saved on this device only.</p></div>
+</section>
+</main>
+<div id="toast" role="status"></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+let DB={users:{},wall:[],pending:[],ev:[],admin:null};
+/* ---- backend: Firestore sync (falls back to this device if not configured) ---- */
+let fdb=null,ready=false,onReady=[];
+try{if(window.firebase&&window.FIREBASE_CONFIG&&FIREBASE_CONFIG.projectId){firebase.initializeApp(FIREBASE_CONFIG);fdb=firebase.firestore()}}catch(e){fdb=null}
+if(!fdb){try{const r=localStorage.getItem("rev-db");if(r)DB=Object.assign(DB,JSON.parse(r))}catch(e){}}
+const COLS=["wall","pending","ev"],synced={users:{},wall:{},pending:{},ev:{},admin:undefined};let tsn=0;
+const uid=k=>"u_"+encodeURIComponent(k);
+function rowsOf(c){return DB[c].map(o=>{if(!o._id)o._id=Math.random().toString(36).slice(2,10)+Date.now().toString(36);if(!o._ts)o._ts=Date.now()*1000+(tsn++%1000);return o})}
+function push(){if(!fdb||!ready)return;const b=fdb.batch();let n=0;
+  const put=(r,d)=>{b.set(r,d);n++},del=r=>{b.delete(r);n++};
+  Object.keys(DB.users).forEach(k=>{const j=JSON.stringify(DB.users[k]);if(synced.users[k]!==j){synced.users[k]=j;put(fdb.collection("users").doc(uid(k)),JSON.parse(j))}});
+  Object.keys(synced.users).forEach(k=>{if(!DB.users[k]){delete synced.users[k];del(fdb.collection("users").doc(uid(k)))}});
+  COLS.forEach(c=>{const cur={};rowsOf(c).forEach(o=>{cur[o._id]=1;const j=JSON.stringify(o);if(synced[c][o._id]!==j){synced[c][o._id]=j;put(fdb.collection(c).doc(o._id),JSON.parse(j))}});
+    Object.keys(synced[c]).forEach(id=>{if(!cur[id]){delete synced[c][id];del(fdb.collection(c).doc(id))}})});
+  const aj=JSON.stringify(DB.admin||null);if(aj!==synced.admin){synced.admin=aj;put(fdb.collection("config").doc("admin"),{v:DB.admin||null})}
+  if(n)b.commit().catch(()=>toast("Could not save. Check your connection."))}
+function redraw(){if(!ready)return;try{stats();wall();drawEvs();drawLb();drawAdmin()}catch(e){}}
+function listen(){let got=0;const one=()=>{if(++got==4){ready=true;onReady.forEach(f=>f());onReady=[]}};let first={users:1,wall:1,pending:1,ev:1,a:1};
+  const arr=(c,asc)=>fdb.collection(c).onSnapshot(s=>{if(s.metadata.hasPendingWrites)return;
+    const L=s.docs.map(d=>{const o=d.data();synced[c][d.id]=JSON.stringify(o);return o}).sort((a,b)=>asc?a._ts-b._ts:b._ts-a._ts);
+    synced[c]={};s.docs.forEach(d=>synced[c][d.id]=JSON.stringify(d.data()));DB[c]=L;if(first[c]){first[c]=0;one()}else redraw()},()=>{if(first[c]){first[c]=0;one()}});
+  fdb.collection("users").onSnapshot(s=>{if(s.metadata.hasPendingWrites)return;const u={};synced.users={};
+    s.docs.forEach(d=>{const k=decodeURIComponent(d.id.slice(2));synced.users[k]=JSON.stringify(d.data());u[k]=d.data()});
+    if(ME&&u[ME]){Object.assign(S,u[ME].s);u[ME].s=S}
+    DB.users=u;if(first.users){first.users=0;one()}else{if(ME&&!u[ME]){signOut();toast("Your account was removed")}else redraw()}},()=>{if(first.users){first.users=0;one()}});
+  arr("wall",false);arr("pending",true);arr("ev",true);
+  fdb.collection("config").doc("admin").onSnapshot(d=>{if(d.metadata.hasPendingWrites)return;DB.admin=d.exists?d.data().v:null;synced.admin=JSON.stringify(DB.admin||null);if(first.a)first.a=0;else redraw()},()=>{})}
+const whenReady=f=>ready?f():onReady.push(f);
+const dbSave=()=>{if(fdb){push();return}try{localStorage.setItem("rev-db",JSON.stringify(DB))}catch(e){}};
+let ME=null,ADMIN=false,S={name:"",pts:0,goals:[],sk:{}};
+const save=()=>{if(ME&&DB.users[ME])DB.users[ME].s=S;dbSave()};
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let tt;const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),1600)};
+
+const RANKS=[["Friend",0],["Companion",50],["Explorer",120],["Ranger",200],["Voyager",300],["Guide",450]];
+function stats(){
+  $("#pts").textContent=ADMIN?"🔑 Leader":(S.av||"⛺")+" "+S.pts+" points"+(S.st>1?" 🔥"+S.st+" days":"");
+  let r=0;RANKS.forEach((x,i)=>{if(S.pts>=x[1])r=i});
+  $("#trail").innerHTML=RANKS.map((x,i)=>`<div class="stop ${i<r?"done":i==r?"now":""}"><i></i>${x[0]}</div>`).join("");
+  const n=RANKS[r+1];
+  $("#next").textContent=n?`You are a ${RANKS[r][0]}. ${n[1]-S.pts} more points to reach ${n[0]}.`:"You have reached Guide. Keep serving!";
+  $("#hi").textContent=S.name?`Welcome back, ${S.name}. Keep climbing the trail.`:"Games, learning and friends for every Revelator, ages 5 to 30. Earn points, climb the six Pathfinder classes.";
+}
+const rk=p=>RANKS.reduce((r,x,i)=>p>=x[1]?i:r,0);
+const add=n=>{const a=rk(S.pts);S.pts=Math.max(0,S.pts+n);save();stats();if(rk(S.pts)>a){confetti();toast("Level up! You are now a "+RANKS[rk(S.pts)][0])}};
+function confetti(){const c=document.createElement("canvas");c.style.cssText="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30";c.width=innerWidth;c.height=innerHeight;document.body.append(c);const x=c.getContext("2d"),P=Array.from({length:90},()=>({x:Math.random()*c.width,y:-20-Math.random()*200,v:2+Math.random()*4,s:5+Math.random()*7,c:["#F2B632","#1F7DB8","#C9372E","#2E9E6B","#fff"][Math.floor(Math.random()*5)],r:Math.random()*6}));let f=0;(function d(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.y+=p.v;p.x+=Math.sin(p.y/30+p.r);x.fillStyle=p.c;x.fillRect(p.x,p.y,p.s,p.s*.6)});if(++f<130&&!matchMedia("(prefers-reduced-motion:reduce)").matches)requestAnimationFrame(d);else c.remove()})()}
+
+
+/* routing */
+function show(){
+  const h=(location.hash||"#home").slice(1);const id=["home","games","learn","club","community","leaders"].concat(ADMIN?["admin"]:[]).includes(h)?h:"home";if(id=="leaders")drawLb();
+  $$(".view").forEach(v=>v.classList.toggle("on",v.id=="v-"+id));
+  $$("#nav a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")=="#"+id));
+}
+addEventListener("hashchange",show);show();
+
+/* verse */
+const V=[["Remember now thy Creator in the days of thy youth.","Ecclesiastes 12:1"],["Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest.","Joshua 1:9"],["Thy word is a lamp unto my feet, and a light unto my path.","Psalm 119:105"],["Let no man despise thy youth; but be thou an example of the believers.","1 Timothy 4:12"],["Trust in the LORD with all thine heart; and lean not unto thine own understanding.","Proverbs 3:5"],["I can do all things through Christ which strengtheneth me.","Philippians 4:13"],["Fear thou not; for I am with thee: be not dismayed; for I am thy God.","Isaiah 41:10"]];
+const vi=Math.floor(Date.now()/864e5)%V.length;$("#vtext").textContent=V[vi][0];$("#vref").textContent=V[vi][1]+" (KJV)";
+
+/* quiz */
+const QZ={
+kids:[["Who built the ark?","Noah",["Moses","Abraham","Samuel"]],["Who was swallowed by a big fish?","Jonah",["Daniel","Peter","Elijah"]],["Who defeated Goliath?","David",["Saul","Joshua","Samson"]],["Which day did God rest after creation?","The seventh day",["The first day","The third day","The sixth day"]],["Who was put in the lions’ den?","Daniel",["Joseph","Paul","Noah"]]],
+path:[["Which brother was sold into Egypt?","Joseph",["Benjamin","Reuben","Judah"]],["Who led Israel across the Jordan River?","Joshua",["Moses","Caleb","Aaron"]],["How many books are in the Bible?","66",["39","27","72"]],["Which disciple walked on water toward Jesus?","Peter",["John","Thomas","Andrew"]],["What is the first book of the New Testament?","Matthew",["Genesis","Acts","John"]]],
+young:[["Who wrote most of the New Testament letters?","Paul",["Peter","John","James"]],["In which book is the fruit of the Spirit listed?","Galatians",["Romans","Hebrews","Ephesians"]],["Which prophet was taken to heaven in a whirlwind?","Elijah",["Elisha","Isaiah","Jeremiah"]],["What is the last book of the Bible?","Revelation",["Jude","Acts","Malachi"]],["Which book of the Bible has 150 chapters?","Psalms",["Proverbs","Isaiah","Job"]]]};
+let qs=[],qi=0,sc=0;
+const quizHome=$("#quiz").innerHTML;
+function bindLevels(){$$("#quiz [data-l]").forEach(b=>b.onclick=()=>{qs=shuffle(QZ[b.dataset.l]);qi=0;sc=0;ask()})}
+function ask(){
+  if(qi>=qs.length){if(sc==qs.length)confetti();$("#quiz").innerHTML=`<h3>You scored ${sc} of ${qs.length}</h3><p>${sc==qs.length?"Perfect round!":"Nice work. Try again to beat it."}</p><button id="again">Play again</button>`;$("#again").onclick=()=>{$("#quiz").innerHTML=quizHome;bindLevels()};return}
+  const q=qs[qi];
+  $("#quiz").innerHTML=`<span class="tag">Question ${qi+1} of ${qs.length}</span><h3 style="margin-top:.5rem">${q[0]}</h3><div class="opts"></div>`;
+  shuffle([q[1],...q[2]]).forEach(o=>{const b=document.createElement("button");b.textContent=o;b.onclick=()=>{
+    $$("#quiz .opts button").forEach(x=>{x.disabled=true;if(x.textContent==q[1])x.classList.add("good")});
+    if(o==q[1]){sc++;add(10);toast("Correct! +10")}else{b.classList.add("bad");toast("Not quite")}
+    setTimeout(()=>{qi++;ask()},1300)};$("#quiz .opts").append(b)});
+}
+bindLevels();
+
+/* memory */
+const IC=["⛺","🔥","🧭","🎺","🌲","🥾","⭐","📖"];let deck=[],open=[],found=0,moves=0,lock=false;
+function mnew(){deck=shuffle([...IC,...IC]);open=[];found=0;moves=0;lock=false;$("#mmoves").textContent="";
+  $("#mem").innerHTML="";deck.forEach((c,i)=>{const b=document.createElement("button");b.textContent="?";b.setAttribute("aria-label","Card "+(i+1));b.onclick=()=>flip(b,i);$("#mem").append(b)})}
+function flip(b,i){
+  if(lock||b.classList.contains("up")||b.classList.contains("ok"))return;
+  b.classList.add("up");b.textContent=deck[i];open.push([b,i]);
+  if(open.length==2){moves++;$("#mmoves").textContent=moves+" moves";lock=true;
+    const [a,c]=open;
+    if(deck[a[1]]==deck[c[1]]){[a[0],c[0]].forEach(x=>{x.classList.remove("up");x.classList.add("ok")});found++;open=[];lock=false;
+      if(found==8){confetti();add(30);toast("You won in "+moves+" moves! +30")}}
+    else setTimeout(()=>{[a[0],c[0]].forEach(x=>{x.classList.remove("up");x.textContent="?"});open=[];lock=false},800)}
+}
+$("#mnew").onclick=mnew;mnew();
+
+/* law */
+const LAW=[["Keep the morning watch","Spend time with God each morning in prayer and Bible reading."],["Do my honest part","Do your share, at club and at home, without needing a reminder."],["Care for my body","Eat well, rest well and stay active."],["Keep a level eye","Choose carefully what you watch and read."],["Be courteous and obedient","Respect others and follow good guidance."],["Walk softly in the sanctuary","Show reverence when you are at church."],["Keep a song in my heart","Stay cheerful and share your music."],["Go on God’s errands","Serve others wherever help is needed."]];
+$("#law").innerHTML=LAW.map((l,i)=>`<button class="flip" data-i="${i}">${l[0]}</button>`).join("");
+$$("#law .flip").forEach(b=>{let f=0;b.onclick=()=>{const l=LAW[b.dataset.i];f=!f;b.innerHTML=f?`<span style="color:var(--ink);font-size:1rem">${l[1]}</span>`:l[0]}});
+
+/* goals */
+const G=["Read my Bible five mornings this week","Learn the Pathfinder Law by heart","Help someone at home without being asked","Invite a friend to club","Learn a new knot or camp skill","Pray for a friend by name","Memorize a Bible verse","Take a nature walk and name five plants or birds"];
+function goals(){$("#goals").innerHTML=G.map((g,i)=>`<label class="goal"><input type="checkbox" data-i="${i}" ${S.goals.includes(i)?"checked":""}><span>${g}</span></label>`).join("");
+  $$("#goals input").forEach(c=>c.onchange=()=>{const i=+c.dataset.i;if(c.checked){S.goals.push(i);add(15);toast("Goal done! +15")}else{S.goals=S.goals.filter(x=>x!=i);add(-15)}})}
+goals();
+
+/* wall */
+function wall(){const w=$("#wall");w.innerHTML="";const n=ME?DB.pending.filter(p=>p.u==ME).length:0;$("#wpend").textContent=n?(n+(n>1?" of your posts are":" of your posts is")+" waiting for a leader to approve."):"";
+  if(!DB.wall.length){w.innerHTML='<p class="mut" style="margin-top:1rem">No posts yet. Be the first to encourage someone.</p>';return}
+  DB.wall.forEach(p=>{const d=document.createElement("div");d.className="post";const b=document.createElement("b");b.textContent=p.n+" · "+p.t;const m=document.createElement("span");m.textContent=p.m;d.append(b,m);w.append(d)})}
+$("#wpost").onclick=()=>{if(!ME){toast("Sign in as a child to post");return}const m=$("#wmsg").value.trim();if(!m){toast("Write a message first");return}
+  DB.pending.push({u:ME,n:DB.users[ME].name,t:$("#wtype").value,m});$("#wmsg").value="";dbSave();wall();toast("Sent to a leader for approval")};
+/* streak and buddy */
+function streak(){const d=new Date().toDateString(),y=new Date(Date.now()-864e5).toDateString();if(S.last!=d){S.st=S.last==y?(S.st||0)+1:1;S.last=d;save()}}
+const AV=["🦁","🦅","🐻","🐺","🦉","🐢"];
+function drawAv(){$("#avs").innerHTML=AV.map(a=>`<button class="av ${S.av==a?"on":""}" data-a="${a}" aria-label="Choose ${a}">${a}</button>`).join("");$$("#avs .av").forEach(b=>b.onclick=()=>{S.av=b.dataset.a;save();drawAv();stats()})}
+
+/* verse fill-in */
+function vgame(){
+ const [t,r]=V[Math.floor(Math.random()*V.length)],tk=t.split(" "),st=x=>x.replace(/[.;:,]/g,"");
+ const ix=tk.map((x,i)=>st(x).length>4?i:-1).filter(i=>i>=0),k=ix[Math.floor(Math.random()*ix.length)],ans=st(tk[k]);
+ const pool=shuffle([...new Set(V.flatMap(v=>v[0].split(" ").map(st)).filter(x=>x.length>4&&x!=ans))]).slice(0,2);
+ tk[k]=tk[k].replace(ans,"_____");
+ $("#vg").innerHTML=`<p><b>${tk.join(" ")}</b> <span class="mut">${r}</span></p><div class="opts"></div>`;
+ shuffle([ans,...pool]).forEach(o=>{const b=document.createElement("button");b.textContent=o;b.onclick=()=>{$$("#vg .opts button").forEach(x=>{x.disabled=true;if(x.textContent==ans)x.classList.add("good")});if(o==ans){add(10);toast("Correct! +10")}else{b.classList.add("bad");toast("The word was "+ans)}setTimeout(vgame,1500)};$("#vg .opts").append(b)})}
+vgame();
+
+/* knots */
+const KN=[["Square knot","Right over left, then left over right. Good for bandages and bundles."],["Bowline","Make a small loop. The rabbit comes out of the hole, goes round the tree and back down the hole."],["Clove hitch","Make two loops the same way, lay the second over the first and slip them over a post."],["Figure-eight","Make a loop, pass the end around the main rope, then back through the loop. It stops a rope slipping out."]];
+$("#knots").innerHTML=KN.map((l,i)=>`<button class="flip" data-i="${i}">${l[0]}</button>`).join("");
+$$("#knots .flip").forEach(b=>{let f=0;b.onclick=()=>{const l=KN[b.dataset.i];f=!f;b.innerHTML=f?`<span style="color:var(--ink);font-size:1rem">${l[1]}</span>`:l[0]}});
+
+/* club page: leaders add shared events and photos here in the code */
+const EVENTS=[]; // example: ["Camporee prep","2026-12-05"]
+const PHOTOS=[]; // put images in a photos folder, then list names, e.g. "camp1.jpg"
+const WC=["Invite a friend to club","Read a psalm every morning","Do one kind thing in secret each day","Learn a new knot and teach it to someone","Write an encouraging note to someone","Take a nature walk and name five things God made","Memorize a verse and say it to a friend","Help at home every day without being asked"];
+const wk=Math.floor(Date.now()/6048e5);
+$("#wc").textContent=WC[wk%WC.length];
+function drawWc(){const d=S.wc==wk;$("#wcb").disabled=d;$("#wcb").textContent=d?"Done this week ✓":"I did it! +20"}
+$("#wcb").onclick=()=>{S.wc=wk;drawWc();confetti();add(20);toast("Challenge complete!")};drawWc();
+function drawEvs(){
+ const today=new Date().toISOString().slice(0,10);
+ const all=DB.ev.map((e,i)=>({t:e.t,d:e.d,i})).filter(e=>e.d>=today).sort((a,b)=>a.d<b.d?-1:1);
+ const box=$("#evs");box.innerHTML="";
+ if(!all.length){box.innerHTML='<span class="mut">No upcoming events yet. Leaders add events in the leader portal.</span>';return}
+ all.forEach(e=>{const r=document.createElement("div");r.className="ev";const s=document.createElement("span"),b=document.createElement("b");b.textContent=e.t;s.append(b,document.createElement("br"),new Date(e.d+"T00:00").toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"}));r.append(s);
+  if(ADMIN){const x=document.createElement("button");x.className="alt";x.textContent="Remove";x.onclick=()=>{DB.ev.splice(e.i,1);dbSave();drawEvs()};r.append(x)}box.append(r)})}
+$("#eadd").onclick=()=>{const t=$("#et").value.trim(),d=$("#ed").value;if(!t||!d){toast("Add a name and a date");return}DB.ev.push({t,d});dbSave();$("#et").value="";drawEvs();toast("Event added")};
+$("#wclear").onclick=()=>{DB.wall=[];dbSave();wall();toast("Wall cleared")};
+drawEvs();
+const SK=[["⛺","Camping"],["🌿","Nature"],["🩹","First aid"],["🎵","Music"],["🤝","Service"],["🎨","Crafts"]];
+function drawSk(){S.sk=S.sk||{};$("#skills").innerHTML="";SK.forEach((s,i)=>{const l=S.sk[i]||0,b=document.createElement("button");b.className="sk";b.innerHTML=`${s[0]} ${s[1]}<b>${"★".repeat(l)+"☆".repeat(3-l)}</b>`;b.setAttribute("aria-label",`${s[1]}, level ${l} of 3`);b.onclick=()=>{const n=(l+1)%4;S.sk[i]=n;save();add(n?10:-30);drawSk()};$("#skills").append(b)})}
+drawSk();
+$("#gal").innerHTML=PHOTOS.length?PHOTOS.map(f=>`<img src="photos/${f}" alt="Club photo" loading="lazy">`).join(""):'<div class="card">No photos yet. Add pictures to a photos folder and list the file names in PHOTOS in the code.</div>';
+wall();drawAv();stats();
+
+/* accounts */
+function el(t,c,x){const e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e}
+const salt=()=>Math.random().toString(36).slice(2)+Date.now().toString(36);
+const cy=t=>{let a=0xdeadbeef,b=0x41c6ce57;for(let i=0;i<t.length;i++){const c=t.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}a=Math.imul(a^(a>>>16),2246822507)^Math.imul(b^(b>>>13),3266489909);b=Math.imul(b^(b>>>16),2246822507)^Math.imul(a^(a>>>13),3266489909);return (4294967296*(2097151&b)+(a>>>0)).toString(16)};
+async function H(t,m){if(m!="c"){try{if(window.crypto&&crypto.subtle){const d=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return "s"+[...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,"0")).join("")}}catch(e){}}return "c"+cy(t)}
+const chk=async(sl,pw,h)=>(await H(sl+pw,h[0]))===h;
+const adminOk=async pw=>DB.admin?chk(DB.admin.salt,pw,DB.admin.h):pw==="0000";
+
+function after(){$("#gate").hidden=true;$("#adminTab").hidden=!ADMIN;stats();goals();drawSk();drawWc();drawAv();wall();drawEvs();drawLb();drawAdmin();if(ADMIN&&!location.hash.includes("admin"))location.hash="#admin";show()}
+function enter(k){ME=k;ADMIN=false;const u=DB.users[k];S=u.s=Object.assign({pts:0,goals:[],sk:{}},u.s);S.name=u.name;
+  try{localStorage.setItem("rev-me",k);sessionStorage.removeItem("rev-adm")}catch(e){}
+  $("#wname").value=u.name;streak();save();if(location.hash=="#admin")location.hash="#home";after()}
+function enterAdmin(){ME=null;ADMIN=true;S={name:"Leader",pts:0,goals:[],sk:{}};$("#wname").value="";
+  try{sessionStorage.setItem("rev-adm","1");localStorage.removeItem("rev-me")}catch(e){}after()}
+function signOut(){ME=null;ADMIN=false;S={name:"",pts:0,goals:[],sk:{}};
+  try{localStorage.removeItem("rev-me");sessionStorage.removeItem("rev-adm")}catch(e){}
+  $("#gu").value=$("#gp").value=$("#gp2").value="";$("#wname").value="";$("#gate").hidden=false;$("#adminTab").hidden=true;setM("in");location.hash="#home";stats();goals();drawSk();drawWc();drawAv();wall();drawEvs()}
+$("#so").onclick=signOut;
+
+let gm="in",fails=0,lk=0;
+const HINT={in:"Type the name and password you made when you joined.",up:"Use your first name or a nickname, not your full name. Pick a password you will remember (4 or more characters). Do not use a password from anywhere else.",ld:"Leaders: type the leader password."};
+function setM(m){gm=m;$$("#gtabs button").forEach(b=>b.classList.toggle("on",b.dataset.m==m));$("#gu").hidden=m=="ld";$("#gp2").hidden=m!="up";$("#gp").autocomplete=m=="up"?"new-password":"current-password";$("#gsub").textContent={in:"Sign in",up:"Create my account",ld:"Leader sign-in"}[m];$("#ghint").textContent=HINT[m];$("#gmsg").textContent=""}
+$$("#gtabs button").forEach(b=>b.onclick=()=>setM(b.dataset.m));setM("in");
+$("#gf").onsubmit=async e=>{e.preventDefault();const msg=t=>$("#gmsg").textContent=t;
+  if(Date.now()<lk){msg("Too many tries. Please wait 30 seconds.");return}
+  const n=$("#gu").value.trim().replace(/\s+/g," "),pw=$("#gp").value,k=n.toLowerCase();
+  const bad=t=>{if(++fails>=5){lk=Date.now()+30000;fails=0}msg(t)};
+  if(gm=="ld"){if(await adminOk(pw)){fails=0;$("#gp").value="";enterAdmin()}else bad("That is not the leader password.");return}
+  if(n.length<2){msg("Type your name (2 or more letters).");return}
+  if(gm=="in"){const u=DB.users[k];if(u&&await chk(u.salt,pw,u.h)){fails=0;$("#gp").value="";enter(k)}else bad("Wrong name or password.");return}
+  if(DB.users[k]){msg("That name is taken. Add a letter or number.");return}
+  if(pw.length<4){msg("Password needs 4 or more characters.");return}
+  if(pw!==$("#gp2").value){msg("The two passwords do not match.");return}
+  const sl=salt();DB.users[k]={name:n,salt:sl,h:await H(sl+pw),s:{pts:0,goals:[],sk:{}}};dbSave();$("#gp").value=$("#gp2").value="";enter(k);toast("Welcome, "+n+"!")};
+
+function drawLb(){const box=$("#lb");box.innerHTML="";
+  const L=Object.entries(DB.users).map(([k,u])=>({k,n:u.name,a:u.s.av||"⛺",p:u.s.pts||0})).sort((a,b)=>b.p-a.p||a.n.localeCompare(b.n));
+  if(!L.length){box.append(el("span","mut","No one has joined yet. Be the first!"));return}
+  const M=["🥇","🥈","🥉"];
+  L.forEach((u,i)=>{const r=el("div","ev"+(u.k==ME?" me":""));const sp=el("span");sp.append(el("b","",(M[i]||(i+1)+".")+" "+u.a+" "+u.n),document.createElement("br"),RANKS[rk(u.p)][0]);r.append(sp,el("b","",u.p+" pts"));box.append(r)})}
+
+function drawAdmin(){if(!ADMIN)return;
+  $("#adef").hidden=!!DB.admin;
+  const pe=$("#apend");pe.innerHTML="";
+  if(!DB.pending.length)pe.append(el("span","mut","Nothing waiting."));
+  DB.pending.forEach((p,i)=>{const r=el("div","post");r.append(el("b","",p.n+" · "+p.t),el("span","",p.m));const act=el("div","row");act.style.marginTop=".5rem";
+    const ok=el("button","","Approve +5"),no=el("button","alt","Reject");
+    ok.onclick=()=>{DB.wall.unshift({n:p.n,t:p.t,m:p.m});DB.wall=DB.wall.slice(0,30);const u=DB.users[p.u];if(u)u.s.pts=(u.s.pts||0)+5;DB.pending.splice(i,1);dbSave();wall();drawAdmin();toast("Approved")};
+    no.onclick=()=>{DB.pending.splice(i,1);dbSave();drawAdmin();toast("Post removed")};
+    act.append(ok,no);r.append(act);pe.append(r)});
+  const ks=$("#akids");ks.innerHTML="";const E=Object.entries(DB.users);
+  if(!E.length)ks.append(el("span","mut","No children have joined yet."));
+  E.forEach(([k,u])=>{const r=el("div","ev"),sp=el("span");sp.append(el("b","",(u.s.av||"⛺")+" "+u.name),document.createElement("br"),(u.s.pts||0)+" points");
+    const act=el("div","row"),pl=el("button","alt","+10"),mi=el("button","alt","−10"),rm=el("button","alt","Remove");
+    pl.onclick=()=>{u.s.pts=(u.s.pts||0)+10;dbSave();drawAdmin();drawLb()};
+    mi.onclick=()=>{u.s.pts=Math.max(0,(u.s.pts||0)-10);dbSave();drawAdmin();drawLb()};
+    let arm=0;rm.onclick=()=>{if(!arm){arm=1;rm.textContent="Tap again";setTimeout(()=>{arm=0;rm.textContent="Remove"},3000);return}delete DB.users[k];DB.pending=DB.pending.filter(x=>x.u!=k);dbSave();drawAdmin();drawLb();toast(u.name+" removed")};
+    act.append(pl,mi,rm);r.append(sp,act);ks.append(r)});
+  const sel=$("#rsel");sel.innerHTML="";E.forEach(([k,u])=>{const o=el("option","",u.name);o.value=k;sel.append(o)})}
+$("#rbtn").onclick=async()=>{const k=$("#rsel").value,pw=$("#rpw").value,u=DB.users[k];if(!u||pw.length<4){toast("Pick a child and a password of 4 or more characters");return}u.salt=salt();u.h=await H(u.salt+pw);dbSave();$("#rpw").value="";toast("Password reset for "+u.name)};
+$("#apwb").onclick=async()=>{const a=$("#apw1").value;if(a.length<4||a!==$("#apw2").value){toast("Use 4 or more characters and repeat it exactly");return}const sl=salt();DB.admin={salt:sl,h:await H(sl+a)};dbSave();$("#apw1").value=$("#apw2").value="";drawAdmin();toast("Leader password changed")};
+
+/* start: keep a signed-in child signed in, otherwise show the sign-in page */
+function start(){let k=null,adm=false;try{k=localStorage.getItem("rev-me");adm=sessionStorage.getItem("rev-adm")=="1"}catch(e){}
+  if(adm)enterAdmin();else if(k&&DB.users[k])enter(k);else $("#gate").hidden=false}
+if(fdb){listen();whenReady(start)}else start();
+</script>
+</body>
+</html>
